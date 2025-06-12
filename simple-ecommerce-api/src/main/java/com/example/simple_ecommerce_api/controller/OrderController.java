@@ -1,6 +1,6 @@
 package com.example.simple_ecommerce_api.controller;
 
-import com.example.simple_ecommerce_api.dto.OrderRequest;
+import com.example.simple_ecommerce_api.dto.OrderRequestDto;
 import com.example.simple_ecommerce_api.model.Order;
 import com.example.simple_ecommerce_api.model.OrderItem;
 import com.example.simple_ecommerce_api.service.OrderService;
@@ -19,12 +19,15 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody OrderRequest request) {
-        return orderService.createOrder(request);
-    }
+    public OrderResponseDto createOrder(@RequestBody OrderRequest request) {
+        Order order = orderService.createOrder(request);
+        return orderService.mapOrderToResponse(order);
+}
 
     @GetMapping("/{id}")
-    public Order getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
-    }
+    public OrderResponseDto getOrderById(@PathVariable Long id) {
+        Order order = orderService.getOrderById(id);
+        return orderService.mapOrderToResponse(order);
+}
+    
 }

@@ -1,6 +1,6 @@
 package com.example.simple_ecommerce_api.model;
 
-import com.example.simple_ecommerce_api.dto.OrderItemRequest;
+import com.example.simple_ecommerce_api.dto.OrderItemRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem extends OrderItemRequest {
+public class OrderItem extends OrderItemRequestDto {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
