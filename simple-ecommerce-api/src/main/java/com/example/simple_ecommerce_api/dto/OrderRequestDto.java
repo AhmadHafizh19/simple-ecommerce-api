@@ -7,10 +7,6 @@ import java.util.List;
 
 @Data
 public class OrderRequestDto {
-    private Long customerId;
-    private List<OrderItem> items;
-
-    public Long getCustomer_id() {
-        return customerId;
-    }
+    private Long customer_id;
+    private List<OrderItemRequestDto> items;
 }

@@ -1,7 +1,9 @@
 package com.example.simple_ecommerce_api.service;
 
 import com.example.simple_ecommerce_api.dto.OrderItemRequestDto;
+import com.example.simple_ecommerce_api.dto.OrderItemResponseDto;
 import com.example.simple_ecommerce_api.dto.OrderRequestDto;
+import com.example.simple_ecommerce_api.dto.OrderResponseDto;
 import com.example.simple_ecommerce_api.model.*;
 import com.example.simple_ecommerce_api.repository.CustomerRepository;
 import com.example.simple_ecommerce_api.repository.OrderRepository;
@@ -46,17 +48,17 @@ public class OrderService {
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
             orderItem.setQuantity(itemRequest.getQuantity());
-            orderItem.setUnitPrice(product.getPrice().intValue());
-
-            totalPrice += product.getPrice().intValue() * itemRequest.getQuantity();
+            orderItem.setUnitPrice(product.getPrice());
             orderItems.add(orderItem);
+
+            totalPrice += product.getPrice() * itemRequest.getQuantity();
         }
 
         Order order = new Order();
         order.setCustomer(customer);
         order.setOrderDate(LocalDateTime.now());
         order.setTotalPrice(totalPrice);
-        order.setOrderItems(orderItems); // Use the correct setter here
+        order.setItems(orderItems);
         for (OrderItem item : orderItems) {
             item.setOrder(order);
         }
@@ -71,6 +73,7 @@ public class OrderService {
     public Order getOrderById(Long id) {
         return orderRepo.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
     }
+
     public OrderResponseDto mapOrderToResponse(Order order) {
     OrderResponseDto dto = new OrderResponseDto();
     dto.setOrder_id(order.getId());
@@ -80,10 +83,10 @@ public class OrderService {
 
     List<OrderItemResponseDto> items = order.getItems().stream().map(item -> {
         OrderItemResponseDto itemDto = new OrderItemResponseDto();
-        itemDTO.setProduct_id(item.getProduct().getId());
-        itemDTO.setProduct_name(item.getProduct().getName());
-        itemDTO.setQuantity(item.getQuantity());
-        itemDTO.setUnit_price(item.getUnitPrice());
+        itemDto.setProduct_id(item.getProduct().getId());
+        itemDto.setProduct_name(item.getProduct().getName());
+        itemDto.setQuantity(item.getQuantity());
+        itemDto.setUnit_price(item.getUnitPrice());
         return itemDto;
     }).toList();
 

@@ -1,9 +1,11 @@
 package com.example.simple_ecommerce_api.controller;
 
 import com.example.simple_ecommerce_api.dto.OrderRequestDto;
+import com.example.simple_ecommerce_api.dto.OrderResponseDto;
 import com.example.simple_ecommerce_api.model.Order;
 import com.example.simple_ecommerce_api.model.OrderItem;
 import com.example.simple_ecommerce_api.service.OrderService;
+import jakarta.persistence.Table;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResponseDto createOrder(@RequestBody OrderRequest request) {
+    public OrderResponseDto createOrder(@RequestBody OrderRequestDto request) {
         Order order = orderService.createOrder(request);
         return orderService.mapOrderToResponse(order);
 }

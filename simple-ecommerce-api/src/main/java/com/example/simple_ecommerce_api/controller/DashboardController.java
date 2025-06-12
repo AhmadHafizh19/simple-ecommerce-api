@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -19,9 +20,10 @@ public class DashboardController {
 
     @GetMapping
     public Map<String, Object> getDashboard() {
-        return Map.of(
-                "total_orders", dashboardService.getTotalOrders(),
-                "total_revenue", dashboardService.getTotalRevenue()
-        );
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("total_orders", dashboardService.getTotalOrders());
+        result.put("total_revenue", dashboardService.getTotalRevenue());
+        result.put("best_selling_products", dashboardService.getBestSellingProducts());
+        return result;
     }
 }
