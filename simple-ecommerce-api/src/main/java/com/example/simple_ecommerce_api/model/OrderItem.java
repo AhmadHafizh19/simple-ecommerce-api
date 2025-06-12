@@ -1,14 +1,15 @@
 package com.example.simple_ecommerce_api.model;
 
+import com.example.simple_ecommerce_api.dto.OrderItemRequest;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Table(name = "order_items")
 @Data
-public class OrderItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+@AllArgsConstructor
+public class OrderItem extends OrderItemRequest {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

@@ -1,21 +1,27 @@
 package com.example.simple_ecommerce_api.controller;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import com.example.simple_ecommerce_api.service.DashboardService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/dashboard")
 public class DashboardController {
+
+    private final DashboardService dashboardService;
+
+    public DashboardController(DashboardService dashboardService) {
+        this.dashboardService = dashboardService;
+    }
+
     @GetMapping
     public Map<String, Object> getDashboard() {
-        // Dummy response, replace with real logic
-        Map<String, Object> response = new HashMap<>();
-        response.put("total_orders", 120);
-        response.put("total_revenue", 12500000);
-        List<Map<String, Object>> bestSelling = new ArrayList<>();
-        bestSelling.add(Map.of("product_id", 3, "name", "usb_keyboard", "quantity_sold", 65));
-        bestSelling.add(Map.of("product_id", 2, "name", "wireless_mouse", "quantity_sold", 40));
-        response.put("best_selling_products", bestSelling);
-        return response;
+        return Map.of(
+                "total_orders", dashboardService.getTotalOrders(),
+                "total_revenue", dashboardService.getTotalRevenue()
+        );
     }
 }
