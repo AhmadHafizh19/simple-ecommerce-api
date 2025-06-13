@@ -1,5 +1,6 @@
 package com.example.simple_ecommerce_api.controller;
 
+import com.example.simple_ecommerce_api.dto.OrderResponseDto;
 import com.example.simple_ecommerce_api.model.Customer;
 import com.example.simple_ecommerce_api.model.Order;
 import com.example.simple_ecommerce_api.service.CustomerService;
@@ -24,7 +25,10 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/orders")
-    public List<Order> getCustomerOrders(@PathVariable Long id) {
-        return orderService.getOrdersByCustomerId(id);
+    public List<OrderResponseDto> getCustomerOrders(@PathVariable Long id) {
+        return orderService.getOrdersByCustomerId(id)
+                .stream()
+                .map(orderService::mapOrderToResponse)
+                .toList();
     }
 }

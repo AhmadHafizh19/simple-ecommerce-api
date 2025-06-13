@@ -75,23 +75,22 @@ public class OrderService {
     }
 
     public OrderResponseDto mapOrderToResponse(Order order) {
-    OrderResponseDto dto = new OrderResponseDto();
-    dto.setOrder_id(order.getId());
-    dto.setCustomer_id(order.getCustomer().getId());
-    dto.setOrder_date(order.getOrderDate());
-    dto.setTotal_price(order.getTotalPrice());
+        OrderResponseDto dto = new OrderResponseDto();
+        dto.setOrder_id(order.getId());
+        dto.setCustomer_id(order.getCustomer().getId());
+        dto.setOrder_date(order.getOrderDate());
+        dto.setTotal_price(order.getTotalPrice());
 
-    List<OrderItemResponseDto> items = order.getItems().stream().map(item -> {
-        OrderItemResponseDto itemDto = new OrderItemResponseDto();
-        itemDto.setProduct_id(item.getProduct().getId());
-        itemDto.setProduct_name(item.getProduct().getName());
-        itemDto.setQuantity(item.getQuantity());
-        itemDto.setUnit_price(item.getUnitPrice());
-        return itemDto;
-    }).toList();
+        List<OrderItemResponseDto> items = order.getItems().stream().map(item -> {
+            OrderItemResponseDto itemDto = new OrderItemResponseDto();
+            itemDto.setProduct_id(item.getProduct().getId());
+            itemDto.setProduct_name(item.getProduct().getName());
+            itemDto.setQuantity(item.getQuantity());
+            itemDto.setUnit_price(item.getUnitPrice());
+            return itemDto;
+        }).toList();
 
-    dto.setItems(items);
-    return dto;
-}
-
+        dto.setItems(items);
+        return dto;
+    }
 }

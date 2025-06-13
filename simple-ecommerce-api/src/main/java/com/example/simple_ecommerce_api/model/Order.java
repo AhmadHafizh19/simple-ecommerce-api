@@ -22,12 +22,7 @@ public class Order {
     private Integer totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @com.fasterxml.jackson.annotation.JsonProperty("orderItems")
     private List<OrderItem> items;
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.items = orderItems;
-        for (OrderItem item : orderItems) {
-            item.setOrder(this);
-        }
-    }
 }
